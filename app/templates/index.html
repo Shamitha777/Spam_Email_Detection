@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📧 Spam Email Detection</h1>
+
+    <p class="subtitle">
+        Detect whether an email or SMS message is <strong>Spam</strong> or
+        <strong>Not Spam</strong> using Machine Learning.
+    </p>
+
+    <form method="POST">
+
+        <textarea
+            name="message"
+            placeholder="Paste your email or SMS message here..."
+            required>{{ message }}</textarea>
+
+        <div class="buttons">
+            <button type="submit">🔍 Analyze Message</button>
+            <button type="reset" class="clear-btn">🗑 Clear</button>
+        </div>
+
+    </form>
+
+    {% if prediction %}
+
+    <div class="result {% if prediction == 'Spam' %}spam-card{% else %}ham-card{% endif %}">
+
+        <h2>Prediction Result</h2>
+
+        {% if prediction == "Spam" %}
+            <div class="badge spam">{{ prediction }}</div>
+        {% else %}
+            <div class="badge ham">{{ prediction }}</div>
+        {% endif %}
+
+        <p class="confidence">
+            <strong>Confidence:</strong> {{ confidence }}%
+        </p>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ confidence }}%;"></div>
+        </div>
+
+        <p class="recommendation">
+            <strong>Recommendation:</strong> {{ recommendation }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
